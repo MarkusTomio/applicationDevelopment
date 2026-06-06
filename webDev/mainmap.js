@@ -15,6 +15,8 @@ let mapObjectInput = {
       };
 
 var map = new ol.Map(mapObjectInput);
+var measuring = false;
+var measuringPoints = [];
 
 document.getElementById('zoom-out').onclick = function() {
     var view = map.getView();
@@ -60,3 +62,9 @@ document.getElementById('down').onclick = function() {
 map.on('click', function(e) {
     console.log(e);
 });
+
+document.getElementById('measure').onclick = function() {
+    measuring = true;
+    measuringPoints = [];
+    alert("Measurement mode: click two points on the map.");
+}
