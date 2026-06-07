@@ -7,7 +7,7 @@ let measuring = false;
 // Define measuring points
 let measureP1 = null;
 let measureP2 = null;
-
+// Define distance
 var distance;
 
 let mapObjectInput = {
@@ -86,6 +86,43 @@ document.getElementById('down').onclick = function() {
     view.animate({center: [currentCenter[0], currentCenter[1] - 100000]});
 };
 
+// Set optional timeout parameter to prevent indefinite waiting
+const options = {
+    timeout: 5000
+};
+
+// Executes if getCurrentPosition succeeds
+function success(pos) {
+    // Transform retrieved position object to map coords array
+    const crd = ol.proj.transform (
+        [pos.coords.longitude, pos.coords.latitude],
+        'EPSG:4326',
+        'EPSG:3857'
+    );
+
+    // Set center and zoom to tranformed map coords
+    var view = map.getView();
+    view.animate({center: crd}, {zoom: 18});
+}
+
+// Executes if getCurrentPosition does not succeed
+function error(err) {
+    // Log error to console
+    console.warn(`ERROR(${err.code}): ${err.message}`);
+
+    // Alert user with error and natural language description of error
+    alert(`ERROR(${err.code}): ${err.message}` +
+    "\nYou blocked us from getting your location." +
+    "\nUpdate permissions to use this functionality.");
+}
+
+// Define what happens on current-location button click
+document.getElementById('current-location').onclick = function() {
+    // Call getCurrentPosition
+    navigator.geolocation.getCurrentPosition(success, error, options);
+};
+
+// Define what happens on map click
 map.on('click', function(e) {
     // If measuring is not active do nothing
     if (!measuring) {
