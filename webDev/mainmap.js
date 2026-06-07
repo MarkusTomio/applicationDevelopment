@@ -182,11 +182,25 @@ map.on('click', function(e) {
     }
 });
 
+// Event listener measure button
 document.getElementById('measure').onclick = function() {
-    // Initiate measurement status
+    // Activate measurement status
     measuring = true;
     // Empty features source, i.e. from previous measurement
     pointFeatures.clear();
     // Display measurement status and instructions on page
     document.getElementById('measureStatus').innerHTML = "Measurement mode: click two points on the map.";
+}
+
+// Event listener reset-measure button
+document.getElementById('reset-measure').onclick = function() {
+    // Set status to normal
+    measuring = false;
+    // Set points to null
+    measureP1 = null;
+    measureP2 = null;
+    // Empty features source, i.e. from previous measurement
+    pointFeatures.clear();
+    // Remove measurement status on page
+    document.getElementById('measureStatus').innerHTML = null;
 }
