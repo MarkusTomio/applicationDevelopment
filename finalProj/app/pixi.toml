@@ -1,0 +1,20 @@
+[workspace]
+authors = ["MarkusTomio <markus.tomio@outlook.com>"]
+channels = ["conda-forge"]
+name = "app"
+platforms = ["linux-64"]
+version = "0.1.0"
+
+[tasks]
+
+[dependencies]
+python = "3.12.*"
+marimo = ">=0.23.16,<0.24"
+numpy = ">=2.5.2,<3"
+pandas = ">=3.0.5,<4"
+geopandas = ">=1.1.4,<2"
+shapely = ">=2.1.2,<3"
+pyproj = ">=3.7.2,<4"
+rasterio = ">=1.5.1,<2"
+duckdb = ">=1.5.5,<2"
+lonboard = ">=0.16.0,<0.17"

@@ -1,0 +1,13 @@
+services:
+  marimo-notebook:
+    build: .
+    container_name: RDAS
+    ports:
+      - "127.0.0.1:8080:8080"
+    volumes:
+      - ./app:/app
+    tmpfs:
+      - /app/.pixi
+    working_dir: /app
+    stdin_open: true
+    tty: true
