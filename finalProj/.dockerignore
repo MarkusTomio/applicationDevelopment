@@ -1,0 +1,8 @@
+# Keep notebook source and unrelated local files out of image builds; Compose provides them through runtime bind mount
+**
+
+# Include only the files required to build the image
+!Dockerfile
+!app/
+!app/pixi.toml
+!app/pixi.lock
