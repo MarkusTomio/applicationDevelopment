@@ -182,7 +182,7 @@ def _(mo):
 
     For that, we first define our query as a string, as it is part of the SQL structure. Question marks can be used as placeholders for query parameters, but file paths need different handling. The S3 path is passed into the query string for it to be present before / during execution, and the output path is given as a standard Python argument in the `to_parquet()` wrapper method. Expressed in natural language, the query says:
 
-    > `Select` everything `From` the remote GeoParquet files on S3 `WHERE` the subtype is crop, that is within the bbox, and that intersects with the geometry of the AOI (reconstructing the geometry from the WKB).
+    > `Select` everything `From` the remote GeoParquet files on S3 `WHERE` the subtype is crop, the min_zoom is 8 (highest resolution representation), that is within the bbox, and that intersects with the geometry of the AOI (reconstructing the geometry from the WKB).
 
     Notably, we first use a cheap bbox filter to narrow down the amount of data the intersects test needs to go through during the finer filtering.
 
@@ -210,6 +210,7 @@ def _(
         FROM read_parquet('{OVERTURE_S3_PATH}')
         WHERE
             subtype = 'crop'
+            AND cartography.min_zoom = 8
             AND bbox.xmin <= ?
             AND bbox.xmax >= ?
             AND bbox.ymin <= ?
