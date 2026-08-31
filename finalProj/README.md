@@ -1,11 +1,33 @@
-## Project Proposal
+# RDAS - Rainfall Deficit in Agricultural Areas of Sicily
 
-### Project Title: Rainfall Deficit in Agricultural Areas of Sicily
+The RDAS project provides a reproducible workflow for calculating and interactively exploring yearly seasonal anomalies for agricultural land-cover areas in Sicily (and with minimal adaption for any other NUTS region).
 
-The project falls into the Geospatial Python category and has the goal to provide insights into which agricultural areas in Sicily experienced lower than average seasonal rainfall in selected years, when compared to a historical baseline. For this, precipitation raster data will be combined with land-use vector data, while making use of several geospatial Python tools.
-#### 1.	Expected Outcomes
-The main outcome is to be divided into two parts. The first part is a parametrised preprocessing workflow that can be executed as script and notebook. Within this workflow, the required input data will be retrieved and prepared, before calculating the rainfall baseline for the agricultural season (potentially March to September 1991 - 2020). From this baseline, the anomalies for each of the years 2021 – 2025 will then be derived and assigned to agricultural land-use / land cover polygons via their centroids. So, the result of this first part is a dataset containing agricultural polygons of Sicily with their yearly rainfall anomaly values. Optionally, a summary table will be yielded which reports statistics such as relative and absolute agricultural area affected by rainfall deficit for each specific year / season. The second part is a reactive notebook for exploring this data interactively, allowing users to inspect their year of interest and retrieve polygon specific attributes. Lastly, a pre-processed sample dataset will be provided so that especially graders don’t have to run the whole preprocessing pipeline including data downloads if they don’t wish to.
-#### 2.	Data
-For precipitation data the CHIRPS gridded rainfall dataset will be used / subsetted from the UC Santa Barbara Climate Hazard Center (COG mirror). The agricultural polygons are queried via DuckDB from Overture Maps land-cover/-use, using its GeoParquet releases on S3. Lastly, the boundary of Sicily (AoI) is derived from the corresponding statistical NUTS region (NUTS 2 ITG1).
-#### 3.	Methods & Tools List
-DuckDB for efficiently querying Overture Maps data, GeoPandas & Shapely for vector processing, rasterio for raster data processing, probably xarray for temporal aggregation of precipitation data; Marimo to structure the workflow and provide the exploration notebook; Lonboard for the interactive map; Docker and Pixi for dependency management and reproducibility purposes.
+The project is made of two main components: a processing notebook (also executable as script, refer to corresponding section below for more information) and an interactive exploration notebook. The processing notebook does most of the heavy lifting, by combining CHIRPS precipitation data with Overture Map agricultural land-cover polygons. The explorer notebook is responsible for the visualization of the calculated anomalies for the year 2021-2025 relative to the 1991-2020 March-September baseline.
+
+## Requirements
+
+The project is intended to run inside Docker. Therefore, Docker is required.
+
+All dependencies are managed inside the container.
+
+All data is provided under app/data, even processed data since it is rather small.
+
+## Usage
+
+To start Marimo, run this from the repository root:
+
+```bash
+docker compose up --build
+```
+
+Then open:
+
+```bash
+http://localhost:8080
+```
+
+To run the processing workflow directly from the command line, run this from the repository root:
+
+```bash
+docker compose run --rm marimo-notebook pixi run python rdas_processing.py
+```
