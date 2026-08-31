@@ -6,3 +6,6 @@
 !app/
 !app/pixi.toml
 !app/pixi.lock
+!vendor/
+!vendor/wheels/
+!vendor/wheels/lonboard-0.17.0b1-py3-none-any.whl

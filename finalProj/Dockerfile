@@ -13,6 +13,12 @@ COPY app/pixi.toml app/pixi.lock ./
 # Install exactly dependency versions recorded in pixi.lock
 RUN pixi install --locked
 
+# Copy custom Lonboard wheel containing the shared Earcut worker-pool lifecycle fix
+COPY vendor/wheels/lonboard-0.17.0b1-py3-none-any.whl /tmp/lonboard-0.17.0b1-py3-none-any.whl
+
+# Install patched Lonboard wheel without resolving dependencies, which are managed by Pixi
+RUN pixi run python -m pip install --no-deps /tmp/lonboard-0.17.0b1-py3-none-any.whl
+
 # Disable Marimo update check
 ENV MARIMO_SKIP_UPDATE_CHECK=1
 
